@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choco Hub - Nut Chocolate Collection</title>
+  <!-- Google Fonts: Fredoka for a fun, playful, rounded-corner font style -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #2b1300;
+      font-family: 'Fredoka', sans-serif;
+      color: #FFF3E0;
+    }
+
+    /* Fixed Semi-Transparent Blue Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5%;
+      background: rgba(20, 40, 90, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #FFB370;
+      text-decoration: none;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: #FFF3E0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #FFB370;
+    }
+
+    /* Cinematic Editorial Sub-Hero */
+    .sub-hero {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: linear-gradient(rgba(43, 19, 0, 0.7), rgba(43, 19, 0, 0.9)), url("https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=80");
+      background-size: cover;
+      background-position: center;
+      padding: 0 5%;
+      margin-top: 60px;
+      overflow: hidden;
+    }
+
+    .sub-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      animation: cleanFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes cleanFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* White Text with Smooth Up-and-Down Brown/Amber Neon Glow */
+    .sub-hero-title {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      color: #ffffff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      animation: smoothBrownNeonGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes smoothBrownNeonGlow {
+      0% {
+        text-shadow: 0 0 10px rgba(90, 40, 5, 0.6), 
+                     0 0 20px rgba(120, 50, 5, 0.4), 
+                     0 0 30px rgba(209, 102, 0, 0.2);
+      }
+      50% {
+        text-shadow: 0 0 20px rgba(150, 65, 10, 0.9), 
+                     0 0 35px rgba(209, 102, 0, 0.7), 
+                     0 0 55px rgba(255, 150, 60, 0.5),
+                     0 0 80px rgba(82, 39, 0, 0.8);
+      }
+      100% {
+        text-shadow: 0 0 10px rgba(90, 40, 5, 0.6), 
+                     0 0 20px rgba(120, 50, 5, 0.4), 
+                     0 0 30px rgba(209, 102, 0, 0.2);
+      }
+    }
+
+    .sub-hero-subtitle {
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      color: #FFF3E0;
+      line-height: 1.7;
+      opacity: 0.9;
+      font-weight: 400;
+    }
+
+    /* Container & Back Navigation */
+    .container {
+      max-width: 1300px;
+      margin: 80px auto 120px auto;
+      padding: 0 5%;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #FFB370;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 50px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .back-link:hover {
+      transform: translateX(-8px);
+    }
+
+    .section-heading {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: #FFB370;
+      margin-bottom: 60px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Rare Asymmetrical Bento Grid Layout (Balanced for 16 Items) */
+    .rare-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 30px;
+    }
+
+    .avant-card {
+      grid-column: span 4;
+      background: rgba(255, 179, 112, 0.04);
+      border: 1px solid rgba(255, 179, 112, 0.18);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .avant-card:nth-child(4n + 1) { grid-column: span 7; }
+    .avant-card:nth-child(4n + 2) { grid-column: span 5; }
+    .avant-card:nth-child(4n + 3) { grid-column: span 5; }
+    .avant-card:nth-child(4n + 4) { grid-column: span 7; }
+
+    .avant-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: #FFB370;
+      background: rgba(255, 179, 112, 0.09);
+      box-shadow: 0 25px 50px rgba(209, 102, 0, 0.2);
+    }
+
+    /* Fixed Height Card Media for Equal Melting Borders */
+    .card-media {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+      filter: brightness(0.95) contrast(1.05);
+    }
+
+    /* Seamless Melting Fade Gradient Over Image Bottom */
+    .card-media::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(to bottom, rgba(43, 19, 0, 0) 0%, rgba(43, 19, 0, 1) 100%);
+      pointer-events: none;
+    }
+
+    .avant-card:hover .card-img {
+      transform: scale(1.08) rotate(1deg);
+      filter: brightness(1.05) contrast(1.1);
+    }
+
+    /* Card Body Pulls Up into the Melt Zone */
+    .card-body {
+      padding: 10px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-grow: 1;
+      margin-top: -35px; 
+      position: relative;
+      z-index: 2;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      color: #FFB370;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+      transition: color 0.3s ease;
+    }
+
+    .avant-card:hover .card-title {
+      color: #ffffff;
+    }
+
+    .card-text {
+      font-size: 1rem;
+      color: #FFF3E0;
+      line-height: 1.7;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #1f0d00;
+      color: #FFF3E0;
+      padding: 80px 8% 40px 8%;
+      border-top: 2px solid rgba(255, 179, 112, 0.15);
+      width: 100%;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-col h3 {
+      font-size: 1.8rem;
+      color: #FFB370;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .footer-col p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      opacity: 0.88;
+      margin-bottom: 15px;
+    }
+
+    .developer-list {
+      list-style: none;
+    }
+
+    .developer-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .developer-list li::before {
+      content: "•";
+      color: #FFB370;
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+    .contact-info a {
+      color: #FFB370;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 179, 112, 0.15);
+      font-size: 0.95rem;
+      opacity: 0.7;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .avant-card {
+        grid-column: span 6 !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 1rem 4%;
+      }
+      .nav-links {
+        gap: 1rem;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+      .logo {
+        font-size: 1.2rem;
+      }
+      .avant-card {
+        grid-column: span 12 !important;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fixed Transparent Blue Header -->
+  <header class="header">
+    <a href="index.html" class="logo">Choco Hub</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="featured.html">Featured</a></li>
+      <li><a href="flavors.html">Flavors</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </header>
+
+  <!-- Cinematic Sub-Hero with White Text & Brown Neon Glow -->
+  <section class="sub-hero">
+    <div class="sub-hero-content">
+      <h1 class="sub-hero-title">Nut Chocolate</h1>
+      <p class="sub-hero-subtitle">Crunchy, nutty, and deeply satisfying. An artisanal collection packed with the finest roasted tree nuts and buttery kernels.</p>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="container">
+    <a href="index.html" class="back-link">&larr; Back to Home</a>
+
+    <h2 class="section-heading">The Nut Chocolate Collection</h2>
+
+    <!-- Asymmetrical Bento Grid (16 Items) -->
+    <div class="rare-grid">
+      
+      <!-- 1 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Hazelnuts" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">1. Chocolate with Hazelnuts</h3>
+          <p class="card-text">Whole roasted Italian hazelnuts embedded generously inside a thick block of rich, smooth chocolate.</p>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Almonds" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">2. Chocolate with Almonds</h3>
+          <p class="card-text">Crunchy California almonds roasted to a golden perfection and folded into decadent cocoa.</p>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Peanuts" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">3. Chocolate with Peanuts</h3>
+          <p class="card-text">A classic combination of salted roasted peanuts paired against rich, creamy sweet chocolate.</p>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Pistachios" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">4. Chocolate with Pistachios</h3>
+          <p class="card-text">Emerald green Mediterranean pistachio kernels studded throughout glossy, fine chocolate.</p>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Cashews" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">5. Chocolate with Cashews</h3>
+          <p class="card-text">Buttery, mild cashew nut pieces packed into a smooth and velvety chocolate foundation.</p>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Walnuts" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">6. Chocolate with Walnuts</h3>
+          <p class="card-text">Earthv, textured walnut halves that complement the deep aromatic notes of artisan cocoa.</p>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Pecans" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">7. Chocolate with Pecans</h3>
+          <p class="card-text">Sweet, buttery pecan pieces folded into chocolate for a distinct southern-style crunch.</p>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Macadamia Nuts" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">8. Chocolate with Macadamia Nuts</h3>
+          <p class="card-text">Exquisite, rich Hawaiian macadamia nuts delivering an ultra-buttery and luxurious bite.</p>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Brazil Nuts" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">9. Chocolate with Brazil Nuts</h3>
+          <p class="card-text">Large, nutrient-rich Amazonian Brazil nuts coated in a thick layer of fine artisanal chocolate.</p>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Mixed Nuts" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">10. Chocolate with Mixed Nuts</h3>
+          <p class="card-text">An ultimate medley of almonds, hazelnuts, cashews, and pecans blended into one rich bar.</p>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Roasted Almonds" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">11. Chocolate with Roasted Almonds</h3>
+          <p class="card-text">Intensely dry-roasted almonds offering an aromatic, smoky crunch with every mouthful.</p>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Caramelized Hazelnuts" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">12. Chocolate with Caramelized Hazelnuts</h3>
+          <p class="card-text">Hazelnuts glazed in golden caramel sugar shards before being enrobed in smooth chocolate.</p>
+        </div>
+      </div>
+
+      <!-- 13 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Peanut Butter" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">13. Chocolate with Peanut Butter</h3>
+          <p class="card-text">A luscious, creamy core of whipped peanut butter encased inside a glossy chocolate shell.</p>
+        </div>
+      </div>
+
+      <!-- 14 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=800&q=80" alt="Chocolate with Hazelnut Praline" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">14. Chocolate with Hazelnut Praline</h3>
+          <p class="card-text">Smooth, velvety hazelnut praline paste blended into a rich confectionary block.</p>
+        </div>
+      </div>
+
+      <!-- 15 -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=800&q=80" alt="Chocolate Nut Clusters" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">15. Chocolate Nut Clusters</h3>
+          <p class="card-text">Hand-scoop clusters of assorted whole nuts bound tightly together with glossy melted chocolate.</p>
+        </div>
+      </div>
+
+      <!-- 16 (Added by AI to balance grid) -->
+      <div class="avant-card">
+        <div class="card-media">
+          <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=800&q=80" alt="Royal Toasted Nut and Praline Slab" class="card-img" />
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">16. Royal Toasted Nut and Praline Slab</h3>
+          <p class="card-text">A majestic artisanal masterpiece loaded with double-roasted hazelnuts, almonds, and creamy praline layers.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Choco Hub</h3>
+        <p>At Choco Hub, we are dedicated to crafting the finest chocolate experiences using ethically sourced ingredients.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Developer</h3>
+        <p><strong>Kemal Kedir</strong></p>
+        <ul class="developer-list">
+          <li>A website developer and designer</li>
+          <li>Working on web projects, user interfaces, and custom web designs</li>
+          <li>Educated at Mizan Institute of Technology</li>
+          <li class="contact-info">
+            Email: <a href="mailto:kemexman777@gmail.com">kemexman777@gmail.com</a>
+          </li>
+          <li class="contact-info">
+            Phone: <a href="tel:+251913052370">+251 913052370</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Choco Hub. All Rights Reserved. Crafted by Kemal Kedir.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

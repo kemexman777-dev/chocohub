@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Choco Hub</title>
+  <!-- Google Fonts: Fredoka for rounded-corner typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #1a0b00;
+      font-family: 'Fredoka', sans-serif;
+      color: #FFF3E0;
+    }
+
+    /* Fixed Minimalist Dark Glass Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 6%;
+      background: rgba(26, 11, 0, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 2px solid rgba(255, 179, 112, 0.1);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #FFB370;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: #FFF3E0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #FFB370;
+    }
+
+    /* About Hero Section */
+    .about-hero {
+      position: relative;
+      width: 100%;
+      min-height: 55vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 5% 60px 5%;
+      background: radial-gradient(circle at center, #3d1a00 0%, #1a0b00 80%);
+      overflow: hidden;
+    }
+
+    .about-hero-inner {
+      max-width: 900px;
+      z-index: 2;
+    }
+
+    .about-hero-title {
+      font-size: clamp(2.5rem, 7vw, 4.8rem);
+      color: #FFB370;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-hero-desc {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: #FFF3E0;
+      line-height: 1.8;
+      opacity: 0.9;
+    }
+
+    /* Main Container with Linear Down-Scroll Flow */
+    .container {
+      max-width: 900px;
+      margin: 60px auto 140px auto;
+      padding: 0 6%;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #FFB370;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 50px;
+      transition: transform 0.3s ease;
+    }
+
+    .back-link:hover {
+      transform: translateX(-6px);
+    }
+
+    /* Vertical Story Sections */
+    .story-section {
+      margin-bottom: 70px;
+      padding-bottom: 50px;
+      border-bottom: 1px solid rgba(255, 179, 112, 0.12);
+    }
+
+    .story-section:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .story-title {
+      font-size: 2rem;
+      color: #FFB370;
+      margin-bottom: 25px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .story-text {
+      font-size: 1.15rem;
+      line-height: 1.95;
+      color: #FFF3E0;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .story-text:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Developer Highlight Callout Box inside Story */
+    .dev-highlight-box {
+      background: rgba(255, 179, 112, 0.04);
+      border-left: 4px solid #FFB370;
+      padding: 30px;
+      border-radius: 0 16px 16px 0;
+      margin-top: 25px;
+    }
+
+    .dev-highlight-box p {
+      margin-bottom: 15px;
+    }
+
+    .dev-highlight-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .dev-contact-links {
+      display: flex;
+      gap: 2rem;
+      margin-top: 20px;
+    }
+
+    .dev-contact-links a {
+      color: #FFB370;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .dev-contact-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #120700;
+      color: #FFF3E0;
+      padding: 80px 8% 40px 8%;
+      border-top: 2px solid rgba(255, 179, 112, 0.15);
+      width: 100%;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-col h3 {
+      font-size: 1.8rem;
+      color: #FFB370;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .footer-col p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      opacity: 0.88;
+      margin-bottom: 15px;
+    }
+
+    .developer-list {
+      list-style: none;
+    }
+
+    .developer-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .developer-list li::before {
+      content: "•";
+      color: #FFB370;
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+    .contact-info a {
+      color: #FFB370;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 179, 112, 0.15);
+      font-size: 0.95rem;
+      opacity: 0.7;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .story-title {
+        font-size: 1.6rem;
+      }
+      .story-text {
+        font-size: 1.05rem;
+      }
+      .dev-contact-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fixed Minimalist Header -->
+  <header class="header">
+    <a href="index.html" class="logo">Choco Hub</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="featured.html">Featured</a></li>
+      <li><a href="flavors.html">Flavors</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+  </header>
+
+  <!-- About Hero Section -->
+  <section class="about-hero">
+    <div class="about-hero-inner">
+      <h1 class="about-hero-title">About Choco Hub</h1>
+      <p class="about-hero-desc">An immersive editorial down-scroll chronicle detailing our heritage, ethical philosophy, and the developer behind the platform.</p>
+    </div>
+  </section>
+
+  <!-- Main Container with Clean Down-Scroll Flow -->
+  <main class="container">
+    <a href="index.html" class="back-link">&larr; Back to Home</a>
+
+    <!-- Story Section 1 -->
+    <div class="story-section">
+      <h2 class="story-title">Our Deep Heritage & Origins</h2>
+      <p class="story-text">Founded on an uncompromising passion for fine confectionery, Choco Hub bridges the historic traditions of master European chocolatiers with modern culinary artistry. Every single flavor profile featured in our compendium has been painstakingly researched, categorized, and selected to honor the genuine complexities of botanical bean origins and melt-in-your-mouth textures.</p>
+      <p class="story-text">Our journey began with a simple vision: to create a centralized sanctuary where chocolate lovers could explore an exhaustive spectrum of flavors, ranging from classic dark cacao blocks to avant-garde fruit infusions and rich artisanal truffles.</p>
+    </div>
+
+    <!-- Story Section 2 -->
+    <div class="story-section">
+      <h2 class="story-title">Ethical Sourcing & Sustainability</h2>
+      <p class="story-text">We firmly believe that true culinary luxury begins directly at the origin. Our platform champions sustainable agricultural practices, equitable direct-trade partnerships, and responsibly harvested cacao beans that respect both the earth and farming communities.</p>
+      <p class="story-text">By prioritizing worker welfare, fair compensation, and environmental preservation, we guarantee that every square of chocolate represented in our community stands for both supreme quality and profound global responsibility.</p>
+    </div>
+
+    <!-- Story Section 3 -->
+    <div class="story-section">
+      <h2 class="story-title">The Science of Cacao Craftsmanship</h2>
+      <p class="story-text">Mastering chocolate is an exact science governed by precise temperature curves, optimal conching durations, and rigorous bean fermentation ratios. Our curators collaborate closely with master chocolatiers to analyze crystal structures and flavor compounds.</p>
+      <p class="story-text">This strict dedication ensures that whether you are exploring high-percentage bitter dark notes or delicate white ganache infusions, each entry meets the absolute highest global standards of purity and taste.</p>
+    </div>
+
+    <!-- Story Section 4 -->
+    <div class="story-section">
+      <h2 class="story-title">Meet the Developer</h2>
+      <p class="story-text">Choco Hub was conceptualized, designed, and engineered from the ground up by <strong>Kemal Kedir</strong> (also known as <strong>Kemex</strong>). As a dedicated website developer and designer working in the private sector, Kemal brings a sharp eye for responsive user interfaces, aesthetic dark glassmorphism, and clean code architecture.</p>
+      <p class="story-text">Educated at the <strong>Mizan Institute of Technology</strong>, Kemal combines technical discipline with creative web design to build immersive digital environments that prioritize performance, speed, and seamless cross-device experiences.</p>
+      
+      <div class="dev-highlight-box">
+        <p class="story-text" style="margin-bottom: 10px;"><strong>Get in Touch with Kemal:</strong></p>
+        <div class="dev-contact-links">
+          <span>Email: <a href="mailto:kemexman777@gmail.com">kemexman777@gmail.com</a></span>
+          <span>Phone: <a href="tel:+251913052370">+251 913052370</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Story Section 5 -->
+    <div class="story-section">
+      <h2 class="story-title">Looking Toward the Future</h2>
+      <p class="story-text">As our digital ecosystem continues to expand, our long-term mission remains firmly focused on educating global audiences about fine chocolate appreciation, transparent supply chains, and superior web design execution.</p>
+      <p class="story-text">We warmly invite enthusiasts, developers, and culinary artists alike to explore our growing platform, discover rare flavor combinations, and join us in celebrating the universal love for fine cocoa.</p>
+    </div>
+
+  </main>
+
+  <!-- Developer Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Choco Hub</h3>
+        <p>At Choco Hub, we are dedicated to crafting the finest chocolate experiences using ethically sourced ingredients.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Developer</h3>
+        <p><strong>Kemal Kedir</strong></p>
+        <ul class="developer-list">
+          <li>A website developer and designer</li>
+          <li>Working on web projects, user interfaces, and custom web designs</li>
+          <li>Educated at Mizan Institute of Technology</li>
+          <li class="contact-info">
+            Email: <a href="mailto:kemexman777@gmail.com">kemexman777@gmail.com</a>
+          </li>
+          <li class="contact-info">
+            Phone: <a href="tel:+251913052370">+251 913052370</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Choco Hub. All Rights Reserved. Crafted by Kemal Kedir.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

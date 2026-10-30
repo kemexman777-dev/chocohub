@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choco Hub - Luxury Chocolate Compendium</title>
+  <!-- Google Fonts: Elegant Serif paired with clean sans for true high-end luxury branding -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #1a0a03; /* Rich warm chocolate luxury base */
+      font-family: 'Montserrat', sans-serif;
+      color: #f4ebd0; /* Soft warm ivory */
+    }
+
+    /* Fixed Minimalist Dark Glass Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 6%;
+      background: rgba(26, 10, 3, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25); /* Refined gold border */
+    }
+
+    .logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f4ebd0 20%, #d4af37 60%, #aa771c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.2rem;
+    }
+
+    .nav-links a {
+      color: #f4ebd0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    /* Clean nav hover / active state (Flavors icon/link has no stray color tint) */
+    .nav-links a:hover {
+      color: #d4af37;
+    }
+
+    .nav-links a.active {
+      color: #d4af37;
+      border-bottom: 1px solid #d4af37;
+      padding-bottom: 2px;
+    }
+
+    /* Hero Section with Warm Chocolate & Gold Luxury Lighting */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 160px 6% 80px 6%;
+      background: radial-gradient(circle at center, #3d1706 0%, #1a0a03 80%);
+      overflow: hidden;
+    }
+
+    /* Soft warm gold ambient glow effect */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+      filter: blur(100px);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 950px;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      background: linear-gradient(135deg, #fff8e8 20%, #d4af37 65%, #996515 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      color: #f4ebd0;
+      line-height: 1.8;
+      opacity: 0.9;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Metallic Gold Buttons */
+    .hero-btn {
+      background: linear-gradient(135deg, #d4af37, #aa771c, #d4af37);
+      color: #1a0a03;
+      padding: 14px 34px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .hero-btn:hover {
+      background: linear-gradient(135deg, #e6c687, #d4af37, #bf953f);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(230, 198, 135, 0.45);
+    }
+
+    /* Subtle Antique Gold Outline Buttons */
+    .hero-btn-outline {
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: #d4af37;
+      padding: 14px 34px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-btn-outline:hover {
+      background: rgba(212, 175, 55, 0.08);
+      border-color: #d4af37;
+      color: #fff8e8;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Main Container & Luxury Cards */
+    .container {
+      max-width: 1200px;
+      margin: 80px auto 140px auto;
+      padding: 0 6%;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #f4ebd0 30%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 50px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 35px;
+    }
+
+    /* Luxury Feature Cards with Antique Gold Borders & Warm Glow */
+    .feature-card {
+      background: rgba(212, 175, 55, 0.02);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      border-radius: 16px;
+      padding: 45px 35px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .feature-card:hover {
+      background: rgba(212, 175, 55, 0.06);
+      border-color: #d4af37;
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.25), 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .feature-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #d4af37;
+      margin-bottom: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #f4ebd0;
+      opacity: 0.88;
+      font-weight: 300;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #120602;
+      color: #f4ebd0;
+      padding: 80px 8% 40px 8%;
+      border-top: 1px solid rgba(212, 175, 55, 0.25);
+      width: 100%;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-col h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      color: #d4af37;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .footer-col p {
+      font-size: 1rem;
+      line-height: 1.8;
+      opacity: 0.85;
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+
+    .developer-list {
+      list-style: none;
+    }
+
+    .developer-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      opacity: 0.88;
+    }
+
+    .developer-list li::before {
+      content: "•";
+      color: #d4af37;
+      font-size: 1.4rem;
+      position: absolute;
+      left: 0;
+      top: -3px;
+    }
+
+    .contact-info a {
+      color: #d4af37;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .contact-info a:hover {
+      color: #fff8e8;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      font-size: 0.9rem;
+      opacity: 0.65;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .nav-links {
+        gap: 1.2rem;
+      }
+      .nav-links a {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fixed Minimalist Dark Glass Header -->
+  <header class="header">
+    <a href="index.html" class="logo">Choco Hub</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="featured.html">Featured</a></li>
+      <li><a href="flavors.html">Flavors</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Choco Hub</h1>
+      <p class="hero-subtitle">Bespoke Fine Chocolate Compendium & Artisan Cacao Mastery</p>
+      <div class="hero-btn-group">
+        <a href="featured.html" class="hero-btn">Explore Featured</a>
+        <a href="flavors.html" class="hero-btn-outline">Browse Flavors</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introduction Grid -->
+  <main class="container">
+    <h2 class="section-title">The Art of Fine Cocoa</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h3>S-Tier Masterpieces</h3>
+        <p>Discover our elite curation of award-winning truffles, bourbon-aged slabs, and gold-dusted confections voted on by our community.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Ethical Sourcing</h3>
+        <p>Every single cacao bean featured across our platform champions sustainable farming practices and equitable direct-trade partnerships.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Interactive Experience</h3>
+        <p>Immerse yourself in sleek dark glassmorphism, responsive bento grids, and real-time community voting features built for connoisseurs.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Developer Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Choco Hub</h3>
+        <p>At Choco Hub, we are dedicated to crafting the finest chocolate experiences using ethically sourced ingredients.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Developer</h3>
+        <p><strong>Kemal Kedir</strong></p>
+        <ul class="developer-list">
+          <li>A website developer and designer</li>
+          <li>Working on web projects, user interfaces, and custom web designs</li>
+          <li>Educated at Mizan Institute of Technology</li>
+          <li class="contact-info">
+            Email: <a href="mailto:kemexman777@gmail.com">kemexman777@gmail.com</a>
+          </li>
+          <li class="contact-info">
+            Phone: <a href="tel:+251913052370">+251 913052370</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Choco Hub. All Rights Reserved. Crafted by Kemal Kedir.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

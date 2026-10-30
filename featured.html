@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Featured Masterpieces - Choco Hub</title>
+  <!-- Google Fonts: Fredoka for rounded-corner typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #120700;
+      font-family: 'Fredoka', sans-serif;
+      color: #FFF3E0;
+    }
+
+    /* Fixed Minimalist Dark Glass Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 6%;
+      background: rgba(18, 7, 0, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 2px solid rgba(255, 215, 0, 0.15);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffd700;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: #FFF3E0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #ffd700;
+    }
+
+    /* Immersive Luxury Editorial Hero Section */
+    .featured-hero {
+      position: relative;
+      width: 100%;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 5% 60px 5%;
+      background: radial-gradient(circle at center, #3d1a00 0%, #120700 85%);
+      overflow: hidden;
+    }
+
+    .featured-hero-inner {
+      max-width: 950px;
+      z-index: 2;
+    }
+
+    .featured-hero-title {
+      font-size: clamp(2.5rem, 7vw, 4.8rem);
+      background: linear-gradient(135deg, #fff3e0 20%, #ffd700 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .featured-hero-desc {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: #FFF3E0;
+      line-height: 1.8;
+      opacity: 0.9;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1400px;
+      margin: 40px auto 120px auto;
+      padding: 0 5%;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .back-link:hover {
+      transform: translateX(-6px);
+    }
+
+    .section-intro {
+      text-align: center;
+      font-size: 1.35rem;
+      color: #ffd700;
+      margin-bottom: 50px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+    }
+
+    /* Vertical Bento Grid Layout (55% Image / 45% Content Ratio for rich text) */
+    .vertical-bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-auto-rows: 140px; 
+      gap: 30px;
+    }
+
+    .flavor-panel {
+      background: rgba(255, 215, 0, 0.02);
+      border: 1px solid rgba(255, 215, 0, 0.18);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Vertical Bento Spans for Masterpiece Showcase */
+    .flavor-panel:nth-child(4n + 1) { grid-row: span 6; } 
+    .flavor-panel:nth-child(4n + 2) { grid-row: span 7; } 
+    .flavor-panel:nth-child(4n + 3) { grid-row: span 6; } 
+    .flavor-panel:nth-child(4n + 4) { grid-row: span 7; } 
+
+    /* Ultimate Golden Border Glow Effect on Hover */
+    .flavor-panel:hover {
+      background: rgba(255, 215, 0, 0.06);
+      border-color: #ffd700;
+      transform: translateY(-8px);
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4), 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Exactly 55% height reserved for image banner */
+    .panel-image-wrap {
+      width: 100%;
+      height: 55%;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .panel-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .flavor-panel:hover .panel-img {
+      transform: scale(1.08);
+    }
+
+    /* Luxury Golden Badge on Top of Image */
+    .luxury-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+      color: #120700;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 30px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* Exactly 45% height reserved for card text content */
+    .panel-body {
+      height: 45%;
+      padding: 16px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .panel-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .panel-code {
+      font-size: 0.7rem;
+      color: #ffd700;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Interactive Pink Like Button Styling */
+    .like-btn {
+      background: rgba(255, 105, 180, 0.1);
+      border: 1px solid rgba(255, 105, 180, 0.35);
+      color: #FFF3E0;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .like-btn:hover {
+      background: rgba(255, 105, 180, 0.25);
+      border-color: #ff69b4;
+      transform: scale(1.05);
+    }
+
+    .like-btn.liked {
+      background: #ff69b4;
+      color: #120700;
+      border-color: #ff1493;
+      box-shadow: 0 0 12px rgba(255, 105, 180, 0.6);
+    }
+
+    .like-btn.liked .like-icon {
+      color: #120700;
+    }
+
+    .panel-title {
+      font-size: 1.2rem;
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.15;
+    }
+
+    .panel-desc {
+      font-size: 0.88rem;
+      color: #FFF3E0;
+      line-height: 1.5;
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .panel-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .panel-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .panel-tag {
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      padding: 3px 9px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      color: #ffd700;
+      font-weight: 600;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #0b0400;
+      color: #FFF3E0;
+      padding: 80px 8% 40px 8%;
+      border-top: 2px solid rgba(255, 215, 0, 0.15);
+      width: 100%;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-col h3 {
+      font-size: 1.8rem;
+      color: #ffd700;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .footer-col p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      opacity: 0.88;
+      margin-bottom: 15px;
+    }
+
+    .developer-list {
+      list-style: none;
+    }
+
+    .developer-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .developer-list li::before {
+      content: "•";
+      color: #ffd700;
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+    .contact-info a {
+      color: #ffd700;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 215, 0, 0.15);
+      font-size: 0.95rem;
+      opacity: 0.7;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .vertical-bento-grid {
+        grid-auto-rows: auto;
+      }
+      .flavor-panel {
+        grid-row: span 1 !important;
+        height: 520px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fixed Minimalist Header -->
+  <header class="header">
+    <a href="index.html" class="logo">Choco Hub</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="featured.html" class="active">Featured</a></li>
+      <li><a href="flavors.html">Flavors</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </header>
+
+  <!-- Immersive Luxury Editorial Hero -->
+  <section class="featured-hero">
+    <div class="featured-hero-inner">
+      <h1 class="featured-hero-title">Featured Masterpieces</h1>
+      <p class="featured-hero-desc">Explore our elite curation of chocolate masterpieces. Click the pink like button to vote for your favorite creations and support the community!</p>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="container">
+    <a href="index.html" class="back-link">&larr; Back to Home</a>
+
+    <h2 class="section-intro">&#9733; The Elite Curation &#9733;</h2>
+
+    <!-- Vertical Bento Grid (8 Masterpieces with Rich Descriptions) -->
+    <div class="vertical-bento-grid">
+
+      <!-- 1 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Most Liked</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Grand Reserve Truffle" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 01</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="4820">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">4,820</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Grand Reserve Truffle</h3>
+            <p class="panel-desc">Crafted in limited seasonal batches featuring ultra-rare single-origin Venezuelan Criollo cacao shells filled with a silky, slow-whipped Madagascar vanilla bean ganache that melts instantly on the palate.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Criollo</span>
+              <span class="panel-tag">Limited</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Chef's Best</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Aged Oak Barrel Slabs" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 02</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="3915">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">3,915</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Aged Oak Barrel Slabs</h3>
+            <p class="panel-desc">Meticulously aged for six full months inside charred Kentucky bourbon oak barrels to impart deep, sophisticated smoky wood tannins, rich butter notes, and an exceptionally smooth finish.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Bourbon Cask</span>
+              <span class="panel-tag">Smoky</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Most Sweetened</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Ruby Blossom & Pistachio" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 03</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="5240">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">5,240</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Ruby Blossom & Pistachio</h3>
+            <p class="panel-desc">Featuring naturally vibrant pink ruby cocoa with refreshing berry fruitiness, layered harmoniously alongside a decadent, sweet emerald-green Sicilian pistachio butter cream.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Ruby Cocoa</span>
+              <span class="panel-tag">Pistachio</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Limited Reserve</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Wild Honey Dark Praline" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 04</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="2870">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">2,870</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Wild Honey Dark Praline</h3>
+            <p class="panel-desc">Organic wild floral honey natural sweetness expertly blended into soft 72% dark cocoa ganache centers, encased within robust, high-grade confectionery shells.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Wild Nectar</span>
+              <span class="panel-tag">Praline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Top Rated</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Espresso Hazelnut Ganache" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 05</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="4150">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">4,150</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Espresso Hazelnut Ganache</h3>
+            <p class="panel-desc">Intense roasted Italian espresso bean fragments combined with velvety hazelnut paste, offering an invigorating aromatic crunch followed by a deep, lingering chocolate aroma.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Italian Roast</span>
+              <span class="panel-tag">Espresso</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Award Winner</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Sea Salt Caramel Silk" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 06</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="6120">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">6,120</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Sea Salt Caramel Silk</h3>
+            <p class="panel-desc">Flowing golden butter caramel kissed with hand-harvested mineral sea salt crystals, encased inside smooth milk chocolate to achieve the ultimate sweet-and-savory contrast.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Caramel</span>
+              <span class="panel-tag">Sea Salt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Connoisseur Pick</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Macadamia Gold Truffle" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 07</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="3490">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">3,490</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Macadamia Gold Truffle</h3>
+            <p class="panel-desc">Exquisite buttery Hawaiian macadamia nuts folded gently into whipped white cocoa ganache, hand-finished with a radiant dusting of edible 24-karat gold flakes.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Macadamia</span>
+              <span class="panel-tag">Gold Dust</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="flavor-panel">
+        <div class="luxury-badge">Artisanal Choice</div>
+        <div class="panel-image-wrap">
+          <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Bourbon Pecan Praline" class="panel-img" />
+        </div>
+        <div class="panel-body">
+          <div>
+            <div class="panel-header-row">
+              <span class="panel-code">Masterpiece 08</span>
+              <button class="like-btn" onclick="handleLike(this)" data-likes="4580">
+                <span class="like-icon" style="color: #ff69b4;">&#9829;</span> <span class="like-count">4,580</span>
+              </button>
+            </div>
+            <h3 class="panel-title">Bourbon Pecan Praline</h3>
+            <p class="panel-desc">Southern pecan halves perfectly caramelized in rich bourbon sugar syrup, layered seamlessly inside dense, velvety blocks of premium dark cocoa.</p>
+          </div>
+          <div class="panel-footer-row">
+            <div class="panel-tags">
+              <span class="panel-tag">Bourbon</span>
+              <span class="panel-tag">Pecan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Developer Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Choco Hub</h3>
+        <p>At Choco Hub, we are dedicated to crafting the finest chocolate experiences using ethically sourced ingredients.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Developer</h3>
+        <p><strong>Kemal Kedir</strong></p>
+        <ul class="developer-list">
+          <li>A website developer and designer</li>
+          <li>Working on web projects, user interfaces, and custom web designs</li>
+          <li>Educated at Mizan Institute of Technology</li>
+          <li class="contact-info">
+            Email: <a href="mailto:kemexman777@gmail.com">kemexman777@gmail.com</a>
+          </li>
+          <li class="contact-info">
+            Phone: <a href="tel:+251913052370">+251 913052370</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Choco Hub. All Rights Reserved. Crafted by Kemal Kedir.</p>
+    </div>
+  </footer>
+
+  <!-- Interactive Like Voting Script -->
+  <script>
+    function handleLike(button) {
+      const countSpan = button.querySelector('.like-count');
+      let currentLikes = parseInt(button.getAttribute('data-likes'), 10);
+
+      if (button.classList.contains('liked')) {
+        currentLikes -= 1;
+        button.classList.remove('liked');
+      } else {
+        currentLikes += 1;
+        button.classList.add('liked');
+      }
+
+      button.setAttribute('data-likes', currentLikes);
+      countSpan.textContent = currentLikes.toLocaleString();
+    }
+  </script>
+
+</body>
+
+</html>

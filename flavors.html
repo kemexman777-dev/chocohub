@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choco Hub - The 100 Best Chocolate Flavors of All Time</title>
+  <!-- Google Fonts: Fredoka for rounded-corner typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #1a0b00;
+      font-family: 'Fredoka', sans-serif;
+      color: #FFF3E0;
+    }
+
+    /* Fixed Minimalist Dark Glass Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      box-sizing: border-box;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 6%;
+      background: rgba(26, 11, 0, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 2px solid rgba(255, 179, 112, 0.1);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #FFB370;
+      text-decoration: none;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: #FFF3E0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #FFB370;
+    }
+
+    /* Immersive Editorial Hero Section */
+    .flavor-hero {
+      position: relative;
+      width: 100%;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 5% 60px 5%;
+      background: radial-gradient(circle at center, #3d1a00 0%, #1a0b00 80%);
+      overflow: hidden;
+    }
+
+    .flavor-hero-inner {
+      max-width: 900px;
+      z-index: 2;
+    }
+
+    .flavor-hero-title {
+      font-size: clamp(2.5rem, 7vw, 4.8rem);
+      color: #FFB370;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .flavor-hero-desc {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: #FFF3E0;
+      line-height: 1.8;
+      opacity: 0.9;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1400px;
+      margin: 40px auto 120px auto;
+      padding: 0 5%;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #FFB370;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .back-link:hover {
+      transform: translateX(-6px);
+    }
+
+    .section-intro {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #FFB370;
+      margin-bottom: 50px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Vertical Bento Grid Layout (65% Image / 35% Content Ratio with larger row tracks) */
+    .vertical-bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-auto-rows: 110px; 
+      gap: 25px;
+    }
+
+    .flavor-panel {
+      background: rgba(255, 179, 112, 0.03);
+      border: 1px solid rgba(255, 179, 112, 0.15);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Vertical Bento Spans */
+    .flavor-panel:nth-child(5n + 1) { grid-row: span 6; } 
+    .flavor-panel:nth-child(5n + 2) { grid-row: span 7; } 
+    .flavor-panel:nth-child(5n + 3) { grid-row: span 6; } 
+    .flavor-panel:nth-child(5n + 4) { grid-row: span 8; } 
+    .flavor-panel:nth-child(5n + 5) { grid-row: span 7; } 
+
+    /* Enhanced Border Glow Effect on Hover */
+    .flavor-panel:hover {
+      background: rgba(255, 179, 112, 0.07);
+      border-color: #FFB370;
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px rgba(255, 179, 112, 0.45), 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Exactly 65% height reserved for image banner */
+    .panel-image-wrap {
+      width: 100%;
+      height: 65%;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .panel-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .flavor-panel:hover .panel-img {
+      transform: scale(1.08);
+    }
+
+    /* Exactly 35% height reserved for card text content with larger typography */
+    .panel-body {
+      height: 35%;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .panel-code {
+      font-size: 0.75rem;
+      color: #FFB370;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .panel-title {
+      font-size: 1.25rem;
+      color: #ffffff;
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.15;
+    }
+
+    .panel-desc {
+      font-size: 0.92rem;
+      color: #FFF3E0;
+      line-height: 1.4;
+      opacity: 0.9;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .panel-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .panel-tag {
+      background: rgba(255, 179, 112, 0.1);
+      border: 1px solid rgba(255, 179, 112, 0.3);
+      padding: 3px 10px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      color: #FFB370;
+      font-weight: 600;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #120700;
+      color: #FFF3E0;
+      padding: 80px 8% 40px 8%;
+      border-top: 2px solid rgba(255, 179, 112, 0.15);
+      width: 100%;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-col h3 {
+      font-size: 1.8rem;
+      color: #FFB370;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .footer-col p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      opacity: 0.88;
+      margin-bottom: 15px;
+    }
+
+    .developer-list {
+      list-style: none;
+    }
+
+    .developer-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .developer-list li::before {
+      content: "•";
+      color: #FFB370;
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+    .contact-info a {
+      color: #FFB370;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .contact-info a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 179, 112, 0.15);
+      font-size: 0.95rem;
+      opacity: 0.7;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .vertical-bento-grid {
+        grid-auto-rows: auto;
+      }
+      .flavor-panel {
+        grid-row: span 1 !important;
+        height: 450px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fixed Minimalist Header -->
+  <header class="header">
+    <a href="index.html" class="logo">Choco Hub</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="featured.html">Featured</a></li>
+      <li><a href="flavors.html" class="active">Flavors</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </header>
+
+  <!-- Immersive Editorial Hero -->
+  <section class="flavor-hero">
+    <div class="flavor-hero-inner">
+      <h1 class="flavor-hero-title">The 100 Best Chocolate Flavors</h1>
+      <p class="flavor-hero-desc">An exhaustive curated compendium featuring enlarged typography and rich card details.</p>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="container">
+    <a href="index.html" class="back-link">&larr; Back to Home</a>
+
+    <h2 class="section-intro">Visual Compendium (1–100)</h2>
+
+    <!-- Vertical Bento Grid (100 Items with Expanded Text & Larger Font) -->
+    <div class="vertical-bento-grid">
+
+      <!-- 1 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Classic Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 01</span><h3 class="panel-title">Classic Chocolate</h3><p class="panel-desc">The timeless baseline confection offering a deeply comforting, rich, and perfectly well-rounded cocoa indulgence.</p></div><div class="panel-tags"><span class="panel-tag">Traditional Recipe</span><span class="panel-tag">Pure Cocoa</span></div></div></div>
+
+      <!-- 2 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Salted Caramel" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 02</span><h3 class="panel-title">Salted Caramel</h3><p class="panel-desc">Buttery golden caramel infused with flaky sea salt crystals for an exquisite sweet-and-savory awakening.</p></div><div class="panel-tags"><span class="panel-tag">Sweet Salty</span><span class="panel-tag">Buttery Gold</span></div></div></div>
+
+      <!-- 3 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Hazelnut" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 03</span><h3 class="panel-title">Hazelnut</h3><p class="panel-desc">Roasted Italian tree nuts bundled inside velvety smooth chocolate to deliver an intensely nutty crunch.</p></div><div class="panel-tags"><span class="panel-tag">Italian Roast</span><span class="panel-tag">Nutty Crunch</span></div></div></div>
+
+      <!-- 4 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Strawberry" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 04</span><h3 class="panel-title">Strawberry</h3><p class="panel-desc">Infused with real sun-ripened berry notes providing a bright, fruity, and refreshingly sweet contrast.</p></div><div class="panel-tags"><span class="panel-tag">Sun Ripened</span><span class="panel-tag">Fruity Sweet</span></div></div></div>
+
+      <!-- 5 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Raspberry" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 05</span><h3 class="panel-title">Raspberry</h3><p class="panel-desc">Tart, vibrant raspberry highlights perfectly balanced against the luxurious sweetness of rich cocoa.</p></div><div class="panel-tags"><span class="panel-tag">Vibrant Tart</span><span class="panel-tag">Berry Coulis</span></div></div></div>
+
+      <!-- 6 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Vanilla" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 06</span><h3 class="panel-title">Vanilla</h3><p class="panel-desc">Aromatically fragrant vanilla specks blended smoothly into rich, premium cocoa butter bases.</p></div><div class="panel-tags"><span class="panel-tag">Floral Specks</span><span class="panel-tag">Smooth Butter</span></div></div></div>
+
+      <!-- 7 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Cookies and Cream" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 07</span><h3 class="panel-title">Cookies and Cream</h3><p class="panel-desc">Packed with crunchy chocolate biscuit crumbs expertly balancing sweet white cream layers.</p></div><div class="panel-tags"><span class="panel-tag">Biscuit Crumbs</span><span class="panel-tag">Sweet Cream</span></div></div></div>
+
+      <!-- 8 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Peanut Butter" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 08</span><h3 class="panel-title">Peanut Butter</h3><p class="panel-desc">A luscious whipped peanut butter center encased inside a glossy, rich chocolate shell.</p></div><div class="panel-tags"><span class="panel-tag">Whipped Center</span><span class="panel-tag">Savory Nut</span></div></div></div>
+
+      <!-- 9 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Pistachio" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 09</span><h3 class="panel-title">Pistachio</h3><p class="panel-desc">Nutty emerald green pistachio kernels studded throughout sweet chocolate for exceptional crunch.</p></div><div class="panel-tags"><span class="panel-tag">Emerald Green</span><span class="panel-tag">Gourmet Crunch</span></div></div></div>
+
+      <!-- 10 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Almond" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 10</span><h3 class="panel-title">Almond</h3><p class="panel-desc">Whole roasted California almonds packed generously inside a creamy coat of fine cocoa.</p></div><div class="panel-tags"><span class="panel-tag">California Roast</span><span class="panel-tag">Tree Nut</span></div></div></div>
+
+      <!-- 11 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Caramel" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 11</span><h3 class="panel-title">Caramel</h3><p class="panel-desc">Flowing golden caramel ribbons encased in rich chocolate for a decadent dual-flavor experience.</p></div><div class="panel-tags"><span class="panel-tag">Golden Ribbons</span><span class="panel-tag">Decadent Flow</span></div></div></div>
+
+      <!-- 12 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Double Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 12</span><h3 class="panel-title">Double Chocolate</h3><p class="panel-desc">An intense combination of rich cocoa solids layered with dense, decadent fudge chunks.</p></div><div class="panel-tags"><span class="panel-tag">Intense Cocoa</span><span class="panel-tag">Fudge Chunks</span></div></div></div>
+
+      <!-- 13 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Dark Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 13</span><h3 class="panel-title">Dark Chocolate</h3><p class="panel-desc">High-percentage cocoa mass delivering a robust, powerful, and deeply sophisticated bitterness.</p></div><div class="panel-tags"><span class="panel-tag">High Percentage</span><span class="panel-tag">Sophisticated Bitters</span></div></div></div>
+
+      <!-- 14 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Milk Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 14</span><h3 class="panel-title">Milk Chocolate</h3><p class="panel-desc">Creamy dairy milk blended seamlessly into fine cocoa solids for an ultra-smooth finish.</p></div><div class="panel-tags"><span class="panel-tag">Creamy Dairy</span><span class="panel-tag">Ultra Smooth</span></div></div></div>
+
+      <!-- 15 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="White Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 15</span><h3 class="panel-title">White Chocolate</h3><p class="panel-desc">Luxuriously sweet and buttery confection made from pure cocoa butter, milk, and sugar.</p></div><div class="panel-tags"><span class="panel-tag">Pure Butter</span><span class="panel-tag">Velvety Sweet</span></div></div></div>
+
+      <!-- 16 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Ruby Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 16</span><h3 class="panel-title">Ruby Chocolate</h3><p class="panel-desc">Naturally pink cocoa showcasing a striking natural ruby hue and distinct berry-fruitiness.</p></div><div class="panel-tags"><span class="panel-tag">Natural Pink</span><span class="panel-tag">Berry Fruitiness</span></div></div></div>
+
+      <!-- 17 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Mint Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 17</span><h3 class="panel-title">Mint Chocolate</h3><p class="panel-desc">Cool, refreshing peppermint fondant notes wrapped inside a robust chocolate shell.</p></div><div class="panel-tags"><span class="panel-tag">Peppermint Fondant</span><span class="panel-tag">Icy Contrast</span></div></div></div>
+
+      <!-- 18 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Orange Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 18</span><h3 class="panel-title">Orange Chocolate</h3><p class="panel-desc">Zesty candied orange peel infused into chocolate for a vibrant, bright citrus contrast.</p></div><div class="panel-tags"><span class="panel-tag">Candied Peel</span><span class="panel-tag">Citrus Contrast</span></div></div></div>
+
+      <!-- 19 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Coconut" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 19</span><h3 class="panel-title">Coconut</h3><p class="panel-desc">Shredded tropical coconut flakes blended into rich chocolate for a fragrant, textured treat.</p></div><div class="panel-tags"><span class="panel-tag">Tropical Flakes</span><span class="panel-tag">Fragrant Texture</span></div></div></div>
+
+      <!-- 20 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Mocha" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 20</span><h3 class="panel-title">Mocha</h3><p class="panel-desc">A harmonious marriage of bold coffee extract and rich dark cocoa for true enthusiasts.</p></div><div class="panel-tags"><span class="panel-tag">Coffee Extract</span><span class="panel-tag">Caffeinated Fusion</span></div></div></div>
+
+      <!-- 21 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Coffee" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 21</span><h3 class="panel-title">Coffee</h3><p class="panel-desc">Infused with aromatic brewed coffee grounds for an energizing and bold flavor kick.</p></div><div class="panel-tags"><span class="panel-tag">Brewed Grounds</span><span class="panel-tag">Energizing Kick</span></div></div></div>
+
+      <!-- 22 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Espresso" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 22</span><h3 class="panel-title">Espresso</h3><p class="panel-desc">Intense roasted espresso bean fragments offering an aromatic and satisfying coffee crunch.</p></div><div class="panel-tags"><span class="panel-tag">Bean Fragments</span><span class="panel-tag">Powerful Punch</span></div></div></div>
+
+      <!-- 23 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Chocolate Fudge" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 23</span><h3 class="panel-title">Chocolate Fudge</h3><p class="panel-desc">Dense, buttery chocolate fudge blocks crafted specifically for an intensely soft treat.</p></div><div class="panel-tags"><span class="panel-tag">Dense Blocks</span><span class="panel-tag">Intensely Soft</span></div></div></div>
+
+      <!-- 24 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Brownie" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 24</span><h3 class="panel-title">Brownie</h3><p class="panel-desc">Fudgy baked brownie crumb chunks folded directly into artisanal chocolate slabs.</p></div><div class="panel-tags"><span class="panel-tag">Baked Crumbs</span><span class="panel-tag">Chewy Pastry</span></div></div></div>
+
+      <!-- 25 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Chocolate Truffle" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 25</span><h3 class="panel-title">Chocolate Truffle</h3><p class="panel-desc">Decadent whipped ganache centers coated in a smooth shell of fine artisan chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Whipped Ganache</span><span class="panel-tag">French Mastery</span></div></div></div>
+
+      <!-- 26 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Tiramisu" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 26</span><h3 class="panel-title">Tiramisu</h3><p class="panel-desc">Layered coffee, mascarpone cream, and cocoa flavors inspired by classic Italian dessert.</p></div><div class="panel-tags"><span class="panel-tag">Mascarpone Cream</span><span class="panel-tag">Italian Dessert</span></div></div></div>
+
+      <!-- 27 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Chocolate Cheesecake" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 27</span><h3 class="panel-title">Chocolate Cheesecake</h3><p class="panel-desc">Tangy cream cheese notes blended with sweet chocolate and graham crust bits.</p></div><div class="panel-tags"><span class="panel-tag">Cream Cheese</span><span class="panel-tag">Graham Crust</span></div></div></div>
+
+      <!-- 28 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Chocolate Mousse" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 28</span><h3 class="panel-title">Chocolate Mousse</h3><p class="panel-desc">Light, airy whipped chocolate aerated for a delicate, cloud-like melting texture.</p></div><div class="panel-tags"><span class="panel-tag">Airy Whipped</span><span class="panel-tag">Cloud Texture</span></div></div></div>
+
+      <!-- 29 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Chocolate Ganache" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 29</span><h3 class="panel-title">Chocolate Ganache</h3><p class="panel-desc">Rich hot cream poured over fine dark chocolate to form a glossy, smooth emulsion.</p></div><div class="panel-tags"><span class="panel-tag">Hot Cream</span><span class="panel-tag">Glossy Emulsion</span></div></div></div>
+
+      <!-- 30 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Chocolate Praline" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 30</span><h3 class="panel-title">Chocolate Praline</h3><p class="panel-desc">Smooth caramelized nut paste blended into high-grade confectionery chocolate shells.</p></div><div class="panel-tags"><span class="panel-tag">Caramelized Paste</span><span class="panel-tag">Confectionery Shell</span></div></div></div>
+
+      <!-- 31 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Hazelnut Praline" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 31</span><h3 class="panel-title">Hazelnut Praline</h3><p class="panel-desc">Luxurious roasted hazelnut paste mixed with liquid sugar and fine European chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Roasted Hazelnut</span><span class="panel-tag">European Style</span></div></div></div>
+
+      <!-- 32 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Chocolate Toffee" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 32</span><h3 class="panel-title">Chocolate Toffee</h3><p class="panel-desc">Hard-cracked caramelized sugar toffee enrobed in thick layers of smooth milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Hard Crack</span><span class="panel-tag">Caramelized Sugar</span></div></div></div>
+
+      <!-- 33 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Butterscotch" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 33</span><h3 class="panel-title">Butterscotch</h3><p class="panel-desc">Brown sugar and melted butter notes combined with velvety chocolate for rich depth.</p></div><div class="panel-tags"><span class="panel-tag">Brown Sugar</span><span class="panel-tag">Melted Butter</span></div></div></div>
+
+      <!-- 34 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Honey" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 34</span><h3 class="panel-title">Honey</h3><p class="panel-desc">Wild floral honey sweetness infused into soft chocolate ganache filling centers.</p></div><div class="panel-tags"><span class="panel-tag">Wild Floral</span><span class="panel-tag">Organic Nectar</span></div></div></div>
+
+      <!-- 35 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Maple Syrup" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 35</span><h3 class="panel-title">Maple Syrup</h3><p class="panel-desc">Rich amber Canadian maple syrup notes paired against dark or creamy milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Amber Canadian</span><span class="panel-tag">Woodland Sap</span></div></div></div>
+
+      <!-- 36 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Dulce de Leche" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 36</span><h3 class="panel-title">Dulce de Leche</h3><p class="panel-desc">Slow-heated sweetened milk caramel ribbons running through fine gourmet cocoa bars.</p></div><div class="panel-tags"><span class="panel-tag">Slow Heated</span><span class="panel-tag">Sweet Milk</span></div></div></div>
+
+      <!-- 37 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Sea Salt" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 37</span><h3 class="panel-title">Sea Salt</h3><p class="panel-desc">Pure mineral salt crystals sprinkled over solid chocolate for enhanced flavor contrast.</p></div><div class="panel-tags"><span class="panel-tag">Mineral Crystals</span><span class="panel-tag">Sharp Contrast</span></div></div></div>
+
+      <!-- 38 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Dark Chocolate Sea Salt" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 38</span><h3 class="panel-title">Dark Chocolate Sea Salt</h3><p class="panel-desc">Robust 70% dark cocoa highlighted by coarse sea salt flakes for true connoisseurs.</p></div><div class="panel-tags"><span class="panel-tag">70% Cocoa</span><span class="panel-tag">Coarse Flakes</span></div></div></div>
+
+      <!-- 39 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Caramel Crunch" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 39</span><h3 class="panel-title">Caramel Crunch</h3><p class="panel-desc">Crisp crunchy bits of golden caramel scattered through smooth, creamy chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Crisp Bits</span><span class="panel-tag">Shatter Texture</span></div></div></div>
+
+      <!-- 40 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Chocolate Crunch" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 40</span><h3 class="panel-title">Chocolate Crunch</h3><p class="panel-desc">Textured crispy pieces embedded inside solid chocolate bars for wonderful structural bite.</p></div><div class="panel-tags"><span class="panel-tag">Textured Pieces</span><span class="panel-tag">Structural Bite</span></div></div></div>
+
+      <!-- 41 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Crispy Rice" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 41</span><h3 class="panel-title">Crispy Rice</h3><p class="panel-desc">Light, airy puffed rice grains folded throughout chocolate for an effortless light crunch.</p></div><div class="panel-tags"><span class="panel-tag">Airy Puffed</span><span class="panel-tag">Feather Light</span></div></div></div>
+
+      <!-- 42 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Chocolate Wafer" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 42</span><h3 class="panel-title">Chocolate Wafer</h3><p class="panel-desc">Crisp pastry wafer sheets layered with decadent, rich chocolate cream fillings.</p></div><div class="panel-tags"><span class="panel-tag">Pastry Sheets</span><span class="panel-tag">Multi Tiered</span></div></div></div>
+
+      <!-- 43 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Cookie Dough" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 43</span><h3 class="panel-title">Cookie Dough</h3><p class="panel-desc">Safe-to-eat buttery chocolate chip cookie dough chunks encased in fine chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Cookie Chunks</span><span class="panel-tag">Nostalgic Chew</span></div></div></div>
+
+      <!-- 44 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Chocolate Chip Cookie" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 44</span><h3 class="panel-title">Chocolate Chip Cookie</h3><p class="panel-desc">Baked shortbread cookie pieces studded with mini chocolate chips for bakery warmth.</p></div><div class="panel-tags"><span class="panel-tag">Shortbread Pieces</span><span class="panel-tag">Bakery Warmth</span></div></div></div>
+
+      <!-- 45 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Oreo Cookie" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 45</span><h3 class="panel-title">Oreo Cookie</h3><p class="panel-desc">Crushed dark cocoa sandwich cookies paired with sweet vanilla cream filling.</p></div><div class="panel-tags"><span class="panel-tag">Sandwich Crumbs</span><span class="panel-tag">Vanilla Cream</span></div></div></div>
+
+      <!-- 46 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Brown Butter" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 46</span><h3 class="panel-title">Brown Butter</h3><p class="panel-desc">Toasted nutty browned butter solids blended into caramel chocolate for rich aromas.</p></div><div class="panel-tags"><span class="panel-tag">Toasted Nutty</span><span class="panel-tag">Caramel Aroma</span></div></div></div>
+
+      <!-- 47 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Banana" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 47</span><h3 class="panel-title">Banana</h3><p class="panel-desc">Sweet tropical banana cream filling wrapped inside smooth dark chocolate shells.</p></div><div class="panel-tags"><span class="panel-tag">Tropical Cream</span><span class="panel-tag">Playful Pairing</span></div></div></div>
+
+      <!-- 48 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Mango" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 48</span><h3 class="panel-title">Mango</h3><p class="panel-desc">Exotic sweet mango fruit coulis center encased in creamy white chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Exotic Coulis</span><span class="panel-tag">Sunny Acidity</span></div></div></div>
+
+      <!-- 49 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Passion Fruit" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 49</span><h3 class="panel-title">Passion Fruit</h3><p class="panel-desc">Tangy, aromatic tropical passion fruit ganache paired with smooth milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Tangy Ganache</span><span class="panel-tag">Sharp Tartness</span></div></div></div>
+
+      <!-- 50 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Blueberry" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 50</span><h3 class="panel-title">Blueberry</h3><p class="panel-desc">Wild dried blueberry pieces folded into creamy white or dark chocolate blocks.</p></div><div class="panel-tags"><span class="panel-tag">Wild Dried</span><span class="panel-tag">Woodland Fruit</span></div></div></div>
+
+      <!-- 51 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Blackberry" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 51</span><h3 class="panel-title">Blackberry</h3><p class="panel-desc">Deep woodland blackberry fruit notes infused in rich, decadent cocoa truffles.</p></div><div class="panel-tags"><span class="panel-tag">Wine Like</span><span class="panel-tag">Lush Fruit</span></div></div></div>
+
+      <!-- 52 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Cherry" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 52</span><h3 class="panel-title">Cherry</h3><p class="panel-desc">Sweet liqueur-infused cherry core surrounded by a robust dark chocolate shell.</p></div><div class="panel-tags"><span class="panel-tag">Liqueur Core</span><span class="panel-tag">Timeless Romance</span></div></div></div>
+
+      <!-- 53 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Black Cherry" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 53</span><h3 class="panel-title">Black Cherry</h3><p class="panel-desc">Intense tart black cherry pieces mixed into high-cocoa dark chocolate bars.</p></div><div class="panel-tags"><span class="panel-tag">Bold Punch</span><span class="panel-tag">Raw Bean Balance</span></div></div></div>
+
+      <!-- 54 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Cranberry" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 54</span><h3 class="panel-title">Cranberry</h3><p class="panel-desc">Chewy tart dried cranberries providing a vibrant and refreshing flavor burst.</p></div><div class="panel-tags"><span class="panel-tag">Chewy Tart</span><span class="panel-tag">Vibrant Burst</span></div></div></div>
+
+      <!-- 55 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Pomegranate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 55</span><h3 class="panel-title">Pomegranate</h3><p class="panel-desc">Antioxidant-rich ruby pomegranate seed centers coated in fine dark cocoa.</p></div><div class="panel-tags"><span class="panel-tag">Jeweled Crunch</span><span class="panel-tag">Antioxidant Rich</span></div></div></div>
+
+      <!-- 56 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Lemon" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 56</span><h3 class="panel-title">Lemon</h3><p class="panel-desc">Zesty candied lemon peel infused into sweet white chocolate for sparkling clarity.</p></div><div class="panel-tags"><span class="panel-tag">Candied Peel</span><span class="panel-tag">Sparkling Clarity</span></div></div></div>
+
+      <!-- 57 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Lime" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 57</span><h3 class="panel-title">Lime</h3><p class="panel-desc">Refreshing key lime zest oils paired with creamy milk chocolate for tropical notes.</p></div><div class="panel-tags"><span class="panel-tag">Key Lime Zest</span><span class="panel-tag">Tropical Tartness</span></div></div></div>
+
+      <!-- 58 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Blood Orange" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 58</span><h3 class="panel-title">Blood Orange</h3><p class="panel-desc">Tart, raspberry-like citrus notes of blood orange infused in rich dark chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Crimson Notes</span><span class="panel-tag">Sophisticated Depth</span></div></div></div>
+
+      <!-- 59 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Mandarin Orange" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 59</span><h3 class="panel-title">Mandarin Orange</h3><p class="panel-desc">Sweet, bright mandarin orange segments coated in smooth milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Bright Segments</span><span class="panel-tag">Citrus Harmony</span></div></div></div>
+
+      <!-- 60 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Orange Zest" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 60</span><h3 class="panel-title">Orange Zest</h3><p class="panel-desc">Finely grated natural orange peel oils dusted across artisan cocoa blocks.</p></div><div class="panel-tags"><span class="panel-tag">Grated Oils</span><span class="panel-tag">Subtle Aroma</span></div></div></div>
+
+      <!-- 61 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Apple Cinnamon" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 61</span><h3 class="panel-title">Apple Cinnamon</h3><p class="panel-desc">Spiced warm cinnamon and dried apple bits baked into delicious chocolate pastry.</p></div><div class="panel-tags"><span class="panel-tag">Warm Cinnamon</span><span class="panel-tag">Autumn Harvest</span></div></div></div>
+
+      <!-- 62 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Pear" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 62</span><h3 class="panel-title">Pear</h3><p class="panel-desc">Delicate, sweet Williams pear notes paired with creamy white chocolate bars.</p></div><div class="panel-tags"><span class="panel-tag">Williams Pear</span><span class="panel-tag">Refined Orchard</span></div></div></div>
+
+      <!-- 63 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Peach" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 63</span><h3 class="panel-title">Peach</h3><p class="panel-desc">Juicy summer peach nectar center wrapped inside velvety milk cocoa blocks.</p></div><div class="panel-tags"><span class="panel-tag">Summer Nectar</span><span class="panel-tag">Lush Floral</span></div></div></div>
+
+      <!-- 64 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Apricot" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 64</span><h3 class="panel-title">Apricot</h3><p class="panel-desc">Tart-sweet dried apricot pieces folded into artisanal dark chocolate slabs.</p></div><div class="panel-tags"><span class="panel-tag">Stone Fruit</span><span class="panel-tag">Tart Sweet</span></div></div></div>
+
+      <!-- 65 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Pineapple" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 65</span><h3 class="panel-title">Pineapple</h3><p class="panel-desc">Tropical caramelized pineapple bits offering a bright, sweet flavor contrast.</p></div><div class="panel-tags"><span class="panel-tag">Caramelized Bits</span><span class="panel-tag">Island Intensity</span></div></div></div>
+
+      <!-- 66 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Raspberry Cheesecake" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 66</span><h3 class="panel-title">Raspberry Cheesecake</h3><p class="panel-desc">Cream cheese ganache layered with tart raspberry coulis and crust crumbs.</p></div><div class="panel-tags"><span class="panel-tag">Cheese Ganache</span><span class="panel-tag">Crust Crumbs</span></div></div></div>
+
+      <!-- 67 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Strawberry Cheesecake" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 67</span><h3 class="panel-title">Strawberry Cheesecake</h3><p class="panel-desc">Rich cheesecake filling infused with strawberry and chocolate pastry shards.</p></div><div class="panel-tags"><span class="panel-tag">Pastry Profile</span><span class="panel-tag">Strawberry Shards</span></div></div></div>
+
+      <!-- 68 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Vanilla Bean" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 68</span><h3 class="panel-title">Vanilla Bean</h3><p class="panel-desc">Speckled with authentic scraped vanilla pods for maximum natural aroma.</p></div><div class="panel-tags"><span class="panel-tag">Scraped Pods</span><span class="panel-tag">Pure Botanical</span></div></div></div>
+
+      <!-- 69 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="French Vanilla" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 69</span><h3 class="panel-title">French Vanilla</h3><p class="panel-desc">Custard-like egg yolk and vanilla richness blended into white cocoa.</p></div><div class="panel-tags"><span class="panel-tag">Custard Rich</span><span class="panel-tag">Egg Yolk</span></div></div></div>
+
+      <!-- 70 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Madagascar Vanilla" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 70</span><h3 class="panel-title">Madagascar Vanilla</h3><p class="panel-desc">The gold standard of vanilla offering deep, creamy, floral sweetness.</p></div><div class="panel-tags"><span class="panel-tag">Gold Standard</span><span class="panel-tag">Creamy Floral</span></div></div></div>
+
+      <!-- 71 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Matcha" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 71</span><h3 class="panel-title">Matcha</h3><p class="panel-desc">Ceremonial Japanese green tea matcha blended into fine white chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Ceremonial Tea</span><span class="panel-tag">Umami Contrast</span></div></div></div>
+
+      <!-- 72 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Green Tea" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 72</span><h3 class="panel-title">Green Tea</h3><p class="panel-desc">Subtle herbal green tea extracts infusing delicate chocolate truffles.</p></div><div class="panel-tags"><span class="panel-tag">Herbal Extract</span><span class="panel-tag">Calm Bitterness</span></div></div></div>
+
+      <!-- 73 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Chai Spice" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 73</span><h3 class="panel-title">Chai Spice</h3><p class="panel-desc">Cardamom, cinnamon, ginger, and black tea notes warming milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Warming Winter</span><span class="panel-tag">Black Tea</span></div></div></div>
+
+      <!-- 74 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Cinnamon" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 74</span><h3 class="panel-title">Cinnamon</h3><p class="panel-desc">Sweet and woody Ceylon cinnamon dusted across rich artisan chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Ceylon Dust</span><span class="panel-tag">Natural Warmth</span></div></div></div>
+
+      <!-- 75 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Ginger" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 75</span><h3 class="panel-title">Ginger</h3><p class="panel-desc">Spicy, warming candied ginger pieces coated in rich dark cocoa slabs.</p></div><div class="panel-tags"><span class="panel-tag">Candied Root</span><span class="panel-tag">Zesty Bite</span></div></div></div>
+
+      <!-- 76 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Cardamom" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 76</span><h3 class="panel-title">Cardamom</h3><p class="panel-desc">Exotic floral and citrusy spice pods infusing dark chocolate ganache.</p></div><div class="panel-tags"><span class="panel-tag">Exotic Pods</span><span class="panel-tag">Middle Eastern</span></div></div></div>
+
+      <!-- 77 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Chili Chocolate" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 77</span><h3 class="panel-title">Chili Chocolate</h3><p class="panel-desc">Aztec-inspired dark chocolate spiced with fiery red chili peppers.</p></div><div class="panel-tags"><span class="panel-tag">Aztec Inspired</span><span class="panel-tag">Fiery Burn</span></div></div></div>
+
+      <!-- 78 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Cayenne Pepper" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 78</span><h3 class="panel-title">Cayenne Pepper</h3><p class="panel-desc">A sharp, lingering heat kick that cuts through sweet milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Lingering Heat</span><span class="panel-tag">Spicy Adrenaline</span></div></div></div>
+
+      <!-- 79 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Pumpkin Spice" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 79</span><h3 class="panel-title">Pumpkin Spice</h3><p class="panel-desc">Nutmeg, cinnamon, and pumpkin puree blended into autumn truffles.</p></div><div class="panel-tags"><span class="panel-tag">Autumn Harvest</span><span class="panel-tag">Nutmeg Blend</span></div></div></div>
+
+      <!-- 80 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Peppermint" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 80</span><h3 class="panel-title">Peppermint</h3><p class="panel-desc">Crisp, icy peppermint oil crystals melting into dark chocolate shells.</p></div><div class="panel-tags"><span class="panel-tag">Menthol Fresh</span><span class="panel-tag">Bracing Burst</span></div></div></div>
+
+      <!-- 81 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Lavender" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 81</span><h3 class="panel-title">Lavender</h3><p class="panel-desc">Botanical French lavender blossoms infused into white chocolate ganache.</p></div><div class="panel-tags"><span class="panel-tag">French Blossoms</span><span class="panel-tag">Calming Aroma</span></div></div></div>
+
+      <!-- 82 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Rose" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 82</span><h3 class="panel-title">Rose</h3><p class="panel-desc">Delicate Damascus rose water aromatic essence folded into milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Damascus Water</span><span class="panel-tag">Royal Elegance</span></div></div></div>
+
+      <!-- 83 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Honeycomb" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 83</span><h3 class="panel-title">Honeycomb</h3><p class="panel-desc">Golden, airy cinder toffee shards that melt into sweet caramel crunch.</p></div><div class="panel-tags"><span class="panel-tag">Cinder Toffee</span><span class="panel-tag">Bubbly Texture</span></div></div></div>
+
+      <!-- 84 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Roasted Hazelnut" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 84</span><h3 class="panel-title">Roasted Hazelnut</h3><p class="panel-desc">Intensely dry-roasted whole hazelnuts offering a smoky, deep nut crunch.</p></div><div class="panel-tags"><span class="panel-tag">Dry Roasted</span><span class="panel-tag">Smoky Density</span></div></div></div>
+
+      <!-- 85 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Salted Peanut" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 85</span><h3 class="panel-title">Salted Peanut</h3><p class="panel-desc">Crunchy salted peanuts bound together in rich, creamy milk chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Salted Peanuts</span><span class="panel-tag">Comfort Food</span></div></div></div>
+
+      <!-- 86 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Peanut Brittle" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 86</span><h3 class="panel-title">Peanut Brittle</h3><p class="panel-desc">Hard-baked peanut and sugar candy shards embedded in chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Hard Baked</span><span class="panel-tag">Glass Shards</span></div></div></div>
+
+      <!-- 87 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="Macadamia" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 87</span><h3 class="panel-title">Macadamia</h3><p class="panel-desc">Exquisite buttery Hawaiian macadamia nuts delivering luxury texture.</p></div><div class="panel-tags"><span class="panel-tag">Hawaiian Nut</span><span class="panel-tag">High Creaminess</span></div></div></div>
+
+      <!-- 88 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Cashew" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 88</span><h3 class="panel-title">Cashew</h3><p class="panel-desc">Mild, creamy cashew nut pieces packed into a smooth chocolate base.</p></div><div class="panel-tags"><span class="panel-tag">Mild Creamy</span><span class="panel-tag">Soft Crunch</span></div></div></div>
+
+      <!-- 89 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Pecan" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 89</span><h3 class="panel-title">Pecan</h3><p class="panel-desc">Sweet, buttery southern pecan halves folded into decadent cocoa slabs.</p></div><div class="panel-tags"><span class="panel-tag">Southern Halves</span><span class="panel-tag">Holiday Notes</span></div></div></div>
+
+      <!-- 90 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Walnut" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 90</span><h3 class="panel-title">Walnut</h3><p class="panel-desc">Earthy, textured walnut pieces complementing deep dark chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Earthy Pieces</span><span class="panel-tag">Wine Pairing</span></div></div></div>
+
+      <!-- 91 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=600&q=80" alt="Mixed Nuts" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 91</span><h3 class="panel-title">Mixed Nuts</h3><p class="panel-desc">An ultimate medley of almonds, hazelnuts, cashews, and pecans.</p></div><div class="panel-tags"><span class="panel-tag">Ultimate Medley</span><span class="panel-tag">Multi Layered</span></div></div></div>
+
+      <!-- 92 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=600&q=80" alt="Almond Crunch" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 92</span><h3 class="panel-title">Almond Crunch</h3><p class="panel-desc">Diced crunchy roasted almond nibs distributed evenly across bars.</p></div><div class="panel-tags"><span class="panel-tag">Diced Nibs</span><span class="panel-tag">Uniform Texture</span></div></div></div>
+
+      <!-- 93 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1548907040-4baa42d10919?auto=format&fit=crop&w=600&q=80" alt="Coconut Almond" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 93</span><h3 class="panel-title">Coconut Almond</h3><p class="panel-desc">Tropical toasted coconut flakes paired with crunchy almond pieces.</p></div><div class="panel-tags"><span class="panel-tag">Island Sweetness</span><span class="panel-tag">California Crunch</span></div></div></div>
+
+      <!-- 94 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80" alt="Pistachio Cream" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 94</span><h3 class="panel-title">Pistachio Cream</h3><p class="panel-desc">Luxurious whipped green pistachio butter cream filling.</p></div><div class="panel-tags"><span class="panel-tag">Green Butter</span><span class="panel-tag">Spreadable Melt</span></div></div></div>
+
+      <!-- 95 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1582293041079-7814c2f12063?auto=format&fit=crop&w=600&q=80" alt="Turkish Delight" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 95</span><h3 class="panel-title">Turkish Delight</h3><p class="panel-desc">Rosewater-scented chewy jelly squares enrobed in dark chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Chewy Jelly</span><span class="panel-tag">Mideast Tradition</span></div></div></div>
+
+      <!-- 96 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=600&q=80" alt="Marshmallow" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 96</span><h3 class="panel-title">Marshmallow</h3><p class="panel-desc">Pillowy soft mini marshmallows folded into thick chocolate blocks.</p></div><div class="panel-tags"><span class="panel-tag">Spongy Contrast</span><span class="panel-tag">Mini Pillows</span></div></div></div>
+
+      <!-- 97 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=600&q=80" alt="S'mores" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 97</span><h3 class="panel-title">S'mores</h3><p class="panel-desc">Grape cracker bits, toasted marshmallow, and rich chocolate combined.</p></div><div class="panel-tags"><span class="panel-tag">Grape Cracker</span><span class="panel-tag">Campfire Evening</span></div></div></div>
+
+      <!-- 98 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1526080652727-5b77f74eacd2?auto=format&fit=crop&w=600&q=80" alt="Caramel Macchiato" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 98</span><h3 class="panel-title">Caramel Macchiato</h3><p class="panel-desc">Espresso coffee layers swirled with sweet buttery caramel and milk.</p></div><div class="panel-tags"><span class="panel-tag">Barista Layers</span><span class="panel-tag">Coffee Shop</span></div></div></div>
+
+      <!-- 99 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1575377222312-dd1a63a51638?auto=format&fit=crop&w=600&q=80" alt="Irish Cream" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 99</span><h3 class="panel-title">Irish Cream</h3><p class="panel-desc">Whiskey-infused creamy dairy liqueur ganache wrapped in dark chocolate.</p></div><div class="panel-tags"><span class="panel-tag">Whiskey Infused</span><span class="panel-tag">Adult Luxury</span></div></div></div>
+
+      <!-- 100 -->
+      <div class="flavor-panel"><div class="panel-image-wrap"><img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80" alt="Red Velvet" class="panel-img" /></div><div class="panel-body"><div><span class="panel-code">Flavor 100</span><h3 class="panel-title">Red Velvet</h3><p class="panel-desc">Mild cocoa cake notes paired with tangy cream cheese frosting cream.</p></div><div class="panel-tags"><span class="panel-tag">Crimson Pastry</span><span class="panel-tag">Frosting Cream</span></div></div></div>
+
+    </div>
+  </main>
+
+  <!-- Developer Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>Choco Hub</h3>
+        <p>At Choco Hub, we are dedicated to crafting the finest chocolate experiences using ethically sourced ingredients.</p>
+      </div>
+      <div class="footer-col">
+        <h3>Developer</h3>
+        <p><strong>Kemal Kedir</strong></p>
+        <ul class="developer-list">
+          <li>A website developer and designer</li>
+          <li>Working on web projects, user interfaces, and custom web designs</li>
+          <li>Educated at Mizan Institute of Technology</li>
+          <li class="contact-info">
+            Email: <a href="mailto:kemexman777@gmail.com">kemexman777@gmail.com</a>
+          </li>
+          <li class="contact-info">
+            Phone: <a href="tel:+251913052370">+251 913052370</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Choco Hub. All Rights Reserved. Crafted by Kemal Kedir.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>
